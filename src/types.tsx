@@ -243,6 +243,14 @@ export type BottomTabNavigationOptions = BottomTabItemOptions & {
    * Defaults to `false`.
    */
   unmountOnBlur?: boolean;
+
+  /**
+   * 新增
+   */
+  tabBarTransparent?: boolean;
+  tabBarBackground?: (props: {
+    style: StyleProp<ViewStyle>;
+  }) => React.ReactNode;
 };
 
 export type BottomTabBarProps = {

@@ -1,7 +1,7 @@
 {
   "name": "@malacca/bottom-tabs",
   "description": "Bottom tab navigator following iOS design guidelines",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "react-native-component",
     "react-component",

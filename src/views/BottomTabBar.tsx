@@ -8,6 +8,8 @@ import {
   LayoutChangeEvent,
   ScaledSize,
   Dimensions,
+  StyleProp,
+  ViewStyle,
 } from 'react-native';
 import {
   Route,
@@ -59,6 +61,8 @@ export default function BottomTabBar({
     tabBarVisible,
     
     //新增属性
+    tabBarTransparent,
+    tabBarBackground,
     badgeStyle,
     dotStyle,
     rippleColor,
@@ -213,41 +217,45 @@ export default function BottomTabBar({
     })
   }
 
+  // 支持 tabBarTransparent, tabBarBackground, 高度自动提取 + insets.bottom
+  const tabBarLayoutStyle = {
+    position: tabBarTransparent ? 'absolute' : null,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    height: tabBarHeight + insets.bottom,
+    paddingBottom: insets.bottom,
+    paddingHorizontal: Math.max(insets.left, insets.right),
+  } as StyleProp<ViewStyle>;
+
+  const tabBarWrapBaseStyle = tabBarTransparent ? null : {
+    backgroundColor: colors.card,
+    borderTopColor: colors.border,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    elevation: 8,
+  };
+
+  const tabBarWrapKeyboardStyle = keyboardHidesTabBar ? {
+    // When the keyboard is shown, slide down the tab bar
+    transform: [
+      {
+        translateY: visible.interpolate({
+          inputRange: [0, 1],
+          outputRange: [layout.height, 0],
+        }),
+      },
+    ],
+    // Absolutely position the tab bar so that the content is below it
+    // This is needed to avoid gap at bottom when the tab bar is hidden
+    position: tabBarTransparent || keyboardShown ? 'absolute' : null,
+  } : null;
+
   return (
     <Animated.View
-      style={[
-        styles.tabBar,
-        {
-          backgroundColor: colors.card,
-          borderTopColor: colors.border,
-        },
-        keyboardHidesTabBar
-          ? {
-              // When the keyboard is shown, slide down the tab bar
-              transform: [
-                {
-                  translateY: visible.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [layout.height, 0],
-                  }),
-                },
-              ],
-              // Absolutely position the tab bar so that the content is below it
-              // This is needed to avoid gap at bottom when the tab bar is hidden
-              position: keyboardShown ? 'absolute' : null,
-            }
-          : null,
-        {
-          // 修改: 高度自动提取 + insets.bottom
-          height: tabBarHeight + insets.bottom,
-          paddingBottom: insets.bottom,
-          paddingHorizontal: Math.max(insets.left, insets.right),
-        },
-        // 修改: 剔除高度的 style
-        tabBarStyle,
-      ]}
+      style={[tabBarLayoutStyle, tabBarWrapBaseStyle, tabBarWrapKeyboardStyle, tabBarStyle]}
       pointerEvents={keyboardHidesTabBar && keyboardShown ? 'none' : 'auto'}
     >
+      {tabBarTransparent && tabBarBackground ? tabBarBackground({style: tabBarLayoutStyle}) : null}
       <View style={styles.content} onLayout={handleLayout}>
         {tabItems.map((item, index:number) => {
 
@@ -344,13 +352,6 @@ export default function BottomTabBar({
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    elevation: 8,
-  },
   content: {
     flex: 1,
     flexDirection: 'row',

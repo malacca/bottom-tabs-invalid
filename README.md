@@ -133,6 +133,11 @@ options || screenOptions = { ({route, navigation}) => {
 ### `rippleColor`
 按下 Tab 时的水波纹颜色，该属性仅在 Android API level 21+ 生效，若不符合条件，将自动降级，使用 `activeOpacity` 属性
 
+### `tabBarTransparent`
+是否透明化 TabBar，相比通过 `style.backgroudColor` 设置透明，通过该属性设置透明，TabBar 将变为 `absolute`，浮动到页面的上层
+
+### `tabBarBackground`
+自定义背景组件，可结合 `tabBarTransparent` 实现如毛玻璃效果的 TabBar
 
 ----TabBar props End---
 
