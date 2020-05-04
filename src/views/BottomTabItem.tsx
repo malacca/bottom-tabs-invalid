@@ -151,6 +151,7 @@ function makeBottomTabBarItem({
       focused: true,
       size,
       color: activeTintColor,
+      style: focused ? null : {position:"absolute", opacity:0},
     }) as React.ReactElement;
     const inactiveIcon = tabBarIcon({
       index,
@@ -158,15 +159,12 @@ function makeBottomTabBarItem({
       focused: false,
       size,
       color: inactiveTintColor,
+      style: focused ? {position:"absolute", opacity:0} : null,
     }) as React.ReactElement;
     return (
       <View>
-        {React.cloneElement(activeIcon, {
-          style: [activeIcon.props.style, {display: focused ? "flex" : "none"}]
-        })}
-        {React.cloneElement(inactiveIcon, {
-          style: [inactiveIcon.props.style, {display: focused ? "none" : "flex"}]
-        })}
+        {activeIcon}
+        {inactiveIcon}
         {itemBadge}
       </View>
     );

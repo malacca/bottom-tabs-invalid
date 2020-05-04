@@ -24,7 +24,8 @@ export default function BottomTabBadge({
   const badgeElementStyle = [
     isDot ? styles.badgeDot : styles.badge,
     showIcon ? null : (isDot ? styles.badgeDotLabel : styles.badgeLabel),
-    isDot ? dotStyle : badgeStyle
+    isDot ? dotStyle : badgeStyle,
+    !isDot && badge===null ? styles.invisible : null
   ];
   return <Text style={badgeElementStyle}>{isDot ? null : badge}</Text>;
 }
@@ -52,4 +53,7 @@ const styles = StyleSheet.create({
   badgeDotLabel:{
     marginLeft:8,
   },
+  invisible: {
+    opacity: 0
+  }
 });

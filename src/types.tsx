@@ -112,6 +112,7 @@ export type BottomTabBarIconOptions = {
     focused: boolean;
     color: string;
     size: number;
+    style?: StyleProp<ViewStyle>;
   }) => React.ReactNode;
 }
 
