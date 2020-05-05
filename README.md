@@ -176,6 +176,7 @@ tabBarLabel=({
     color: string,  // 当前颜色（根据 focused 返回的 activeTintColor 或 inactiveTintColor）
     showIcon: boolean,   // 当前 Tab 是否显示 icon
     beside: boolean,   // 当前 Tab 是否为图标/文字左右排列
+    style: {},         // icon 组件的 style, 返回组件务必携带
 }) => {
    
     // 返回 文字 或 react native 组件
