@@ -113,6 +113,7 @@ options || screenOptions = { ({route, navigation}) => {
 TabBar 安全区域设置，设置为 `{left:number, right:number, top:number, bottom:number}`， 如： 
  - iphoneX 底部的小黑条是系统区域，TabBar 背景虽可延伸到这里做 UI 美化，但不能放交互元素放到该区域，此时就需要设置 `{bottom:number}` 指定底部不安全区域；
  - 再如：有些穿孔屏的 android 机，在手机横屏时， TabBar 若刚好处于穿孔区，就需要设置 `{left:number}` 来指定左侧不安全区域。
+ - 若应用没有固定屏幕方向，不建议自定义该项，内部会根据屏幕旋转方向自动适应，从外部定义不太方便。
 
 默认情况下，安全区域会自动设置，若获取不准确，或需要实现一些特殊的 UI，可手工进行指定。
 
@@ -139,7 +140,10 @@ TabBar 安全区域设置，设置为 `{left:number, right:number, top:number, b
 按下 Tab 时的水波纹颜色，该属性仅在 Android API level 21+ 生效，若不符合条件，将自动降级，使用 `activeOpacity` 属性
 
 ### `tabBarTransparent`
-是否透明化 TabBar，相比通过 `style.backgroudColor` 设置透明，通过该属性设置透明，TabBar 将变为 `absolute`，浮动到页面的上层； 需要注意：此时页面最底部在 TabBar 下方，若该区域需要使用，记得设置页面的 `paddingBottom`， 尺寸应该为 `TabBar.height` + `safeAreaInset.bottom`，获取参见备注。
+ - 是否透明化 TabBar，相比通过 `style.backgroudColor` 设置透明，通过该属性设置透明，TabBar 将变为 `absolute`，浮动到页面的上层； 
+ - 需要注意：此时页面最底部在 TabBar 下方，若该区域需要使用，记得设置页面的 `paddingBottom`， 尺寸应该为 `TabBar.height` + `safeAreaInset.bottom`
+ - 缺省的 safeAreaInset 使用 `react-native-safe-area-context` 参考 [官方文档](https://github.com/th3rdwave/react-native-safe-area-context)
+
 
 ### `tabBarBackground`
 自定义背景组件，可结合 `tabBarTransparent` 实现如毛玻璃效果的 TabBar
@@ -235,7 +239,7 @@ tabBarButton = (props) => {
 - 在 “左右排列” 时，style.height=40
 - `options` 中自定义的 `style` 属性可以通过 `style.height` 重置 “图标/文字上下排列” 的高度；另外支持一个不符合规范的 `style.landHeight` 同时设置 “左右排列” 时的高度。
 - TabBar 的实际高度为  style.height + safeAreaInset.bottom
-- safeAreaInset.bottom 若是自定义的，没啥好说的；若未定义，可使用 `useSafeArea()` 获取 -> [参考](https://github.com/th3rdwave/react-native-safe-area-context)
+
 
 # 三、injectTabs
 
