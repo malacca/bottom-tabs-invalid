@@ -14,6 +14,7 @@ import {
   Descriptor,
   TabNavigationState,
   TabActionHelpers,
+  RouteProp,
 } from '@react-navigation/native';
 
 export type BottomTabNavigationEventMap = {
@@ -25,6 +26,14 @@ export type BottomTabNavigationEventMap = {
    * Event which fires on long press on the tab in the tab bar.
    */
   tabLongPress: { data: undefined };
+};
+
+export type BottomTabScreenProps<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = {
+  navigation: BottomTabNavigationProp<ParamList, RouteName>;
+  route: RouteProp<ParamList, RouteName>;
 };
 
 export type LabelPosition = 'beside-icon' | 'below-icon';

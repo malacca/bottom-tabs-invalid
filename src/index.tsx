@@ -16,5 +16,6 @@ export { default as BottomTabBadge } from './views/BottomTabBadge';
 export type {
   BottomTabNavigationOptions,
   BottomTabNavigationProp,
+  BottomTabScreenProps,
   BottomTabBarProps,
 } from './types';
